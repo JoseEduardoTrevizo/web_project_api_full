@@ -1,0 +1,109 @@
+.places {
+  margin: auto;
+}
+.element {
+  margin: 0;
+  width: 282px;
+  height: 282px;
+  position: relative;
+}
+.elements {
+  display: grid;
+  max-width: 882px;
+  width: 100%;
+  padding-top: 50px;
+  margin: auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 18px;
+  row-gap: 100px;
+}
+.elements-card {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: end;
+}
+.elements-card__element_image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+.elements-card__element_trash {
+  z-index: 1;
+  display: flex;
+  width: 18px;
+  height: 19.5px;
+  margin-top: 18px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+.elements-card__element_trash_hiden {
+  visibility: hidden;
+}
+.elements-card__element_trash:hover {
+  opacity: 0.5;
+}
+.elements-name {
+  background-color: white;
+  max-width: 282px;
+  width: 100%;
+  height: 79px;
+
+  display: flex;
+  border-radius: 0 0 10px 10px;
+}
+.elements-name__place {
+  margin: 0;
+  max-width: 246px;
+  width: 100%;
+  height: 23px;
+  font-size: 24px;
+  font-weight: 900;
+  padding-top: 25px;
+  padding-left: 21px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.elements-name__place_like {
+  background-image: url(../images/Group.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  width: 25px;
+  height: 25px;
+  margin-top: 25px;
+  margin-right: 20px;
+
+  cursor: pointer;
+}
+.elements-name__place_like_active {
+  background-image: url(../images/Union.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.element__counter {
+  color: black;
+  margin: auto;
+  margin-left: 20%;
+}
+.elements-name__place_like:hover {
+  opacity: 0.5;
+}
+
+@media screen and (max-width: 890px) {
+  .elements {
+    max-width: 280px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, 1fr);
+  }
+  .places {
+    display: flex;
+    justify-content: center;
+  }
+}

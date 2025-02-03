@@ -1,0 +1,14 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts.css);
+@import url(./blocks/page.css);
+@import url(./blocks/header.css);
+@import url(./blocks/profile.css);
+@import url(./blocks/elements.css);
+@import url(./blocks/footer.css);
+@import url(./blocks/popup.css);
+@import url(./blocks/popup_add.css);
+@import url(./blocks/popup_image.css);
+@import url(./blocks/PopupWithConfirmation.css);
+@import url(./blocks/popupChangePicture.css);
+@import url(./blocks/form.css);
+@import url(./blocks/login.css);

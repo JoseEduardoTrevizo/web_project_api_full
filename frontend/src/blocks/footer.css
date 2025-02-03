@@ -1,0 +1,30 @@
+.footer {
+  margin: 0;
+  padding-top: 79px;
+}
+.copyright {
+  margin: auto;
+  max-width: 882px;
+}
+.copyright__footer_author {
+  margin: 0;
+  color: #545454;
+  padding-top: 67px;
+}
+
+@media screen and (max-width: 890px) {
+  .copyright {
+    max-width: 280px;
+  }
+  .copyright__footer_author {
+    padding-top: 48px;
+  }
+}
+@media screen and (max-width: 340px) {
+  .footer {
+    padding-top: 0;
+  }
+  .copyright__footer_author {
+    padding-top: 0;
+  }
+}
