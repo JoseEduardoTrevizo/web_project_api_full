@@ -1,12 +1,16 @@
 const express = require("express");
 const { PORT = 3000 } = process.env;
-const usersRoute = require("./routes/users");
-const cardsRoute = require("./routes/cards");
+
 const { default: mongoose } = require("mongoose");
 const app = express();
 const path = require("path");
 app.use(express.static(path.join(__dirname, "/")));
 const bodyParser = require("body-parser");
+const { login, createUser } = require("./controllers/users");
+const auth = require("./middlewares/auth");
+const usersRoute = require("./routes/users");
+const cardsRoute = require("./routes/cards");
+require("dotenv").config();
 app.use(bodyParser.json());
 
 app.use(express.json());
@@ -33,8 +37,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", cardsRoute);
+app.post("/sigin", login);
+app.post("/signup", createUser);
+app.use(auth);
 app.use("/", usersRoute);
+app.use("/", cardsRoute);
 
 app.get("/", (req, res) => {
   res.status(404).send({ message: "Recurso solicitado no encontrado :/ " });
