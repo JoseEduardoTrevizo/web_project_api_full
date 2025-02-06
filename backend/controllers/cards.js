@@ -1,19 +1,15 @@
 const Card = require("../models/card");
-module.exports.getCards = (req, res) => {
+const NotFoundError = require("../errors/not-found-err");
+module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate("owner")
     .then((cards) => {
       if (!cards) {
-        const error = new Error("Internal server error");
-        error.status = 500;
-        throw error;
+        throw new NotFoundError("Card not found");
       }
       res.send({ data: cards });
     })
-    .catch((err) => {
-      console.log("getCards Error:", err);
-      res.status(err.status).send({ error: err.message });
-    });
+    .catch(next);
 };
 module.exports.createCard = (req, res) => {
   const { name, link } = req.body;

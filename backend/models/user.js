@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const isEmail = require("validator/lib/isEmail");
+const bcrypt = require("bcrypt");
+const unauthorized = require("../errors/unauthorized");
 const regexUser =
   /(http:\/\/|https:\/\/)(www\.)*(\w+\._~:\/\?\/%#\[\]@!\$&'\(\)\*\+,;=)*\/*/gi;
 
@@ -38,6 +40,7 @@ const userSchema = new mongoose.Schema({
     type: string,
     require: true,
     minlength: 8,
+    select: false,
   },
 });
 
@@ -45,17 +48,21 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
   email,
   password
 ) {
-  return this.findOne({ email }).then((user) => {
-    if (!user) {
-      return Promise.reject(new Error("Incorrect email or password"));
-    }
-    return bcrypt.compare(password, user.password).then((matched) => {
-      if (!matched) {
-        return Promise.reject(new Error("Incorrect email or password"));
+  return this.findOne({ email })
+    .select("+password")
+    .then((user) => {
+      if (!user) {
+        return Promise.reject(new unauthorized("Incorrect email or password"));
       }
-      return user;
+      return bcrypt.compare(password, user.password).then((matched) => {
+        if (!matched) {
+          return Promise.reject(
+            new unauthorized("Incorrect email or password")
+          );
+        }
+        return user;
+      });
     });
-  });
 };
 
 module.exports = mongoose.model("user", userSchema);

@@ -1,42 +1,65 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const NotFoundError = require("../errors/not-found-err");
 const { NODE_ENV, JWT_SECRET } = process.env;
+require("dotenv").config();
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
       if (!users) {
-        const error = new Error("Internal server error");
-        error.status = 500;
-        throw error;
+        throw new NotFoundError("User not found");
       }
       res.send({ data: users });
     })
-    .catch((err) => {
-      console.log("Users Error:", err);
-      res.status(err.status).send({ error: err.message });
-    });
+    .catch(next);
 };
 
 module.exports.getUserById = (req, res) => {
+  User.findById(req.params.userId)
+    .orFail(() => {
+      throw new NotFoundError("User not found");
+    })
+    .then((user) => {
+      if (!user) {
+        const error = new Error("User not found");
+        error.statusCode = 404;
+        throw error;
+      }
+      res.json(user);
+    })
+    .catch((err) => {
+      const statusCode = err.statusCode || 500;
+      res
+        .status(statusCode)
+        .send({ message: "Error finding User", error: err.message });
+    });
+};
+
+module.exports.getCurrentUser = (req, res) => {
   User.findById(req.user._id)
     .orFail(() => {
-      const error = new Error("Cannot find user");
-      res.statusCode = 404;
-      throw error;
+      throw new NotFoundError("User not found");
     })
-    .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ error: err.message }));
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      const statusCode = err.statusCode || 500;
+      res
+        .status(statusCode)
+        .send({ message: "Error finding User", error: err.message });
+    });
 };
 
 module.exports.createUser = (req, res) => {
   const { name, about, avatar, email, password } = req.body;
   bcrypt.hash(password, 10).then((hash) => {
     User.create({ name, about, avatar, email, password: hash })
-      .then((user) => {
-        res.send(user);
-      })
+      .then((user) =>
+        res.status(201).json({ _id: user._id, email: user.email })
+      )
       .catch((error) => {
         console.log(error);
         res.status(400).send({ message: "Invalid data" });
@@ -45,7 +68,7 @@ module.exports.createUser = (req, res) => {
 
   module.exports.login = (req, res) => {
     const { email, password } = req.body;
-    return User.findUserByCredentials(email, password)
+    User.findUserByCredentials(email, password)
       .then((user) => {
         const token = jwt.sign(
           { _id: user._id },

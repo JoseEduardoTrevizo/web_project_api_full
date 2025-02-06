@@ -6,6 +6,7 @@
     "no-console": "off",
     "import/newline-after-import": "off",
     "comma-dangle": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
   }
 }
