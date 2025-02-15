@@ -7,37 +7,20 @@ const path = require("path");
 app.use(express.static(path.join(__dirname, "/")));
 const bodyParser = require("body-parser");
 const { celebrate, Joi, errors } = require("celebrate");
-const {
-  login,
-  createUser,
-  updateProfile,
-  updateAvatar,
-} = require("./controllers/users");
+const { login, createUser } = require("./controllers/users");
+const { requestLogger, errorLogger } = require("./middleware/logger");
 const auth = require("./middleware/auth");
+
 const usersRoute = require("./routes/users");
 const cardsRoute = require("./routes/cards");
-const validator = require("validator");
+
 require("dotenv").config();
 
 const cors = require("cors");
-app.use(cors());
-app.options("*", cors());
-const allowedCors = ["localhost:3000"];
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  const { method } = req;
-  if (allowedCors.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
-  const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
-  const requestHeaders = req.headers["access-control-request-headers"];
-  if (method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", DEFAULT_ALLOWED_METHODS);
-    res.header("Access-Control-Allow-Headers", requestHeaders);
-    return res.end();
-  }
-  next();
-});
+
+const allowedCors = ["localhost:3000", ""];
+
+app.use(cors({ origin: allowedCors }));
 
 app.use(bodyParser.json());
 
@@ -53,6 +36,8 @@ mongoose
     console.log("Something went wrong", err);
   });
 
+app.use(requestLogger);
+
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("The server is going to fall down");
@@ -63,19 +48,13 @@ app.listen(PORT, () => {
   console.log(`app listening at por ${PORT}...`);
 });
 
-app.use(requestLogger);
-
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("The server is going to fall down");
   }, 0);
 });
-const validateURL = (value, helpers) => {
-  if (validator.isURL(value)) {
-    return value;
-  }
-  return helpers.error("string.uri");
-};
+
+console.log("login", login);
 
 app.post(
   "/sigin",
@@ -101,26 +80,6 @@ app.post(
   createUser
 );
 
-app.patch(
-  "/users/me",
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30).required(),
-      about: Joi.string().min(2).max(100).required(),
-    }),
-  }),
-  updateProfile
-);
-
-app.patch(
-  "/users/me/avatar",
-  celebrate({
-    body: Joi.object().keys({
-      avatar: Joi.string().required().custom(validateURL),
-    }),
-  }),
-  updateAvatar
-);
 //autorizacion
 app.use(auth);
 //Estas rutas necesitan auth
@@ -130,13 +89,14 @@ app.use("/", cardsRoute);
 app.use(errorLogger);
 app.use(errors());
 
-app.get("/", (req, res) => {
+app.use("/", (req, res) => {
   res.status(404).send({ message: "Recurso solicitado no encontrado :/ " });
 });
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
+    err,
     message: statusCode === 500 ? "Error en el servidor" : message,
   });
 });

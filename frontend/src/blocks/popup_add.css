@@ -1,0 +1,111 @@
+.popup_add-image {
+  display: none; /* por defecto estara oculto*/
+  position: fixed; /* posicion fija */
+  z-index: 1000; /* se posiciona por encima de los elementos*/
+  left: 35%;
+  top: 30%;
+}
+.ventana_modal-add {
+  visibility: hidden;
+}
+
+.popup_is-opened {
+  display: block;
+}
+.form_add-image {
+  display: flex;
+  border-radius: 10px;
+}
+.popup__close {
+  position: flex;
+  width: 33px;
+  height: 33px;
+  top: -40px;
+  right: -430px;
+  z-index: 1000;
+  cursor: pointer;
+}
+.popup__close:hover {
+  opacity: 0.5;
+}
+.popup__container_add-image {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  display: flex;
+  width: 430px;
+  height: 330px;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+}
+.popup__title_add-image {
+  max-width: 330px;
+  width: 100%;
+  padding: 0 64px 54px 36px;
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0;
+  justify-content: start;
+}
+.popup__info_name {
+  border-bottom: solid #c4c4c4;
+  position: absolute;
+  margin: 112px 36px 0px;
+}
+
+.popup__info_link {
+  border-bottom: solid #c4c4c4;
+  position: absolute;
+  margin: 169px 36px 0px;
+}
+.form__input_type_error {
+  color: #ff0000;
+  border-bottom: 1px solid #ff0000;
+}
+.popup__error_link {
+  margin-top: 200px;
+}
+.popup__info_submit_add-image {
+  margin: 243px 36px 36px;
+  border: 0;
+  max-width: 358px;
+  width: 100%;
+  height: 50px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 2px;
+  position: absolute;
+}
+.popup__info_submit:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 890px) {
+  .popup__container-fieldset {
+    max-width: 280px;
+    max-height: 320px;
+    margin: auto;
+  }
+  .popup__create_title {
+    max-width: 238px;
+    padding: 0 22px 54px 22px;
+    font-size: 18px;
+    line-height: 21.78px;
+  }
+  .popup__info_name {
+    max-width: 238px;
+  }
+  .popup__info_link {
+    max-width: 238px;
+  }
+  .popup__info_submit {
+    max-width: 238px;
+    height: 46px;
+  }
+  .popup__close {
+    right: -270px;
+    width: 26px;
+    height: 26px;
+  }
+}

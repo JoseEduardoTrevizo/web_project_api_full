@@ -22,13 +22,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     default:
       "https://practicum-content.s3.us-west-1.amazonaws.com/resources/moved_avatar_1604080799.jpg",
-    validate: function (evt) {
-      return regexUser.test(evt);
+    validate: {
+      validator(v) {
+        return regexUser.test(v);
+      },
+      message: (props) => `${props.value} Se nececita una URL valida`,
     },
-    message: (props) => `${props.value} Se nececita una URL valida`,
   },
   email: {
-    type: string,
+    type: String,
     unique: true,
     require: true,
     validate: {
@@ -37,7 +39,7 @@ const userSchema = new mongoose.Schema({
     },
   },
   password: {
-    type: string,
+    type: String,
     require: true,
     minlength: 8,
     select: false,

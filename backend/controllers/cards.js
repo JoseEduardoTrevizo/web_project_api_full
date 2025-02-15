@@ -7,7 +7,7 @@ module.exports.getCards = (req, res, next) => {
       if (!cards) {
         throw new NotFoundError("Card not found");
       }
-      res.send({ data: cards });
+      res.send(cards);
     })
     .catch(next);
 };
@@ -16,7 +16,11 @@ module.exports.createCard = (req, res) => {
   const owner = req.user._id;
   Card.create({ name, link, owner })
     .then((card) => {
-      res.send(card);
+      Card.findById(card._id)
+        .populate("owner")
+        .then((fullCard) => {
+          res.send(fullCard);
+        });
     })
     .catch((error) => {
       console.log(error);
@@ -39,13 +43,14 @@ module.exports.likeCard = (req, res) => {
     { $addToSet: { likes: req.user._id } },
     { new: true }
   )
+    .populate("owner")
     .orFail(() => {
       const error = new Error("Cannot find card");
       error.status = 404;
       throw error;
     })
     .then((card) => {
-      res.send({ message: "Like added", card });
+      res.send(card);
     })
     .catch((err) => {
       console.log("likeCard Error:", err);
@@ -58,13 +63,14 @@ module.exports.dislikeCard = (req, res) => {
     { $pull: { likes: req.user._id } },
     { new: true }
   )
+    .populate("owner")
     .orFail(() => {
       const error = new Error("Cannot find card");
       error.status = 404;
       throw error;
     })
     .then((card) => {
-      res.send({ message: "Like removed", card });
+      res.send(card);
     })
     .catch((err) => {
       console.log("likeCard Error:", err);
