@@ -17,8 +17,10 @@ const cardsRoute = require("./routes/cards");
 require("dotenv").config();
 
 const cors = require("cors");
+app.use(cors());
+app.options("*", cors());
 
-const allowedCors = ["localhost:3000", ""];
+const allowedCors = ["http://localhost:3000", "http://localhost:27017"];
 
 app.use(cors({ origin: allowedCors }));
 

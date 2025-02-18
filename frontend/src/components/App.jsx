@@ -14,7 +14,8 @@ import Login from "./Main/components/login/Login";
 import Register from "./Main/components/register/Register";
 import InfoToolTip from "./Main/components/infoToolTip/InfoToolTip";
 import ProtectedRoute from "./Main/components/protectedRoute/ProtectedRoute";
-import * as auth from "../utils/auth";
+//import * as auth from "../../src/utils/auth";
+import auth from "../utils/auth";
 import { getToken, setToken } from "../utils/token";
 
 function App() {
@@ -81,28 +82,24 @@ function App() {
   }
 
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then((info) => {
-        setCurrentUser({
-          userName: info.name,
-          userDescription: info.about,
-          userAvatar: info.avatar,
-          userId: info._id,
-          _id: info._id,
+    if (isLoggedIn) {
+      api
+        .getUserInfo()
+        .then((info) => {
+          setCurrentUser(info);
+        })
+        .catch((invalid) => {
+          console.error("invalid message", invalid);
         });
-      })
-      .catch((invalid) => {
-        console.error("invalid message", invalid);
-      });
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((invalid) => {
-        console.error("invalid message", invalid);
-      });
+      api
+        .getInitialCards()
+        .then((res) => {
+          setCards(res);
+        })
+        .catch((invalid) => {
+          console.error("invalid message", invalid);
+        });
+    }
   }, []);
 
   const handleUpdateUser = ({ name, about }) => {
