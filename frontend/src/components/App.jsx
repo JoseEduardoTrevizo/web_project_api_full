@@ -230,9 +230,10 @@ function App() {
   }, []);
 
   const onRegister = ({ userEmail, password }) => {
-    auth
+    return auth
       .register(userEmail, password)
       .then(({ data }) => {
+        console.log(data);
         if (data && data._id) {
           setIsRegistered(true);
         } else {

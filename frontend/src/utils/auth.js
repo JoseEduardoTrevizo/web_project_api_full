@@ -41,6 +41,6 @@ class Api {
 }
 
 const auth = new Api({
-  baseUrl: "http://localhost:27017",
+  baseUrl: "http://localhost:3000",
 });
 export default auth;
