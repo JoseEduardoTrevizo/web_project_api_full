@@ -14,8 +14,8 @@ import Login from "./Main/components/login/Login";
 import Register from "./Main/components/register/Register";
 import InfoToolTip from "./Main/components/infoToolTip/InfoToolTip";
 import ProtectedRoute from "./Main/components/protectedRoute/ProtectedRoute";
-//import * as auth from "../../src/utils/auth";
-import auth from "../utils/auth";
+import * as auth from "../../src/utils/auth";
+
 import { getToken, setToken } from "../utils/token";
 
 function App() {
@@ -87,6 +87,7 @@ function App() {
         .getUserInfo()
         .then((info) => {
           setCurrentUser(info);
+          setEmail(info.email);
         })
         .catch((invalid) => {
           console.error("invalid message", invalid);
@@ -100,7 +101,7 @@ function App() {
           console.error("invalid message", invalid);
         });
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleUpdateUser = ({ name, about }) => {
     return api
@@ -177,7 +178,8 @@ function App() {
 
   const handleLogOut = () => {
     localStorage.removeItem("jwt");
-
+    setCurrentUser({});
+    setEmail("");
     setIsLoggedIn(false);
     navigate("/login");
   };
@@ -213,9 +215,10 @@ function App() {
 
     api
       .getUserInfo(jwt)
-      .then(({ email, password }) => {
+      .then((user) => {
         setIsLoggedIn(true);
-
+        setCurrentUser(user);
+        setEmail(user.email);
         navigate("/home");
       })
       .catch(console.error);
@@ -230,9 +233,9 @@ function App() {
   }, []);
 
   const onRegister = ({ userEmail, password }) => {
-    return auth
+    auth
       .register(userEmail, password)
-      .then(({ data }) => {
+      .then((data) => {
         console.log(data);
         if (data && data._id) {
           setIsRegistered(true);

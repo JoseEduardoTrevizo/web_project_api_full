@@ -4,59 +4,174 @@ class Api {
     this.headers = headers;
   }
 
-  _makeRequest(endpoint, method = "GET", body = null) {
-    const options = {
-      method,
-      headers: { ...this.headers },
+  getHeaders() {
+    const headers = {
+      "Content-Type": "application/json",
     };
-
     const token = localStorage.getItem("jwt");
     if (token) {
-      options.headers["Authorization"] = `Bearer ${token}`;
+      headers["Authorization"] = "Bearer " + token;
     }
+    return headers;
+  }
 
-    if (body) {
-      options.headers["Content-Type"] = "application/json";
-      options.body = JSON.stringify(body);
-    }
-
-    return fetch(`${this.baseUrl}${endpoint}`, options)
+  getUserInfo() {
+    return fetch(`${this.baseUrl}/users/me`, {
+      method: "GET",
+      headers: this.getHeaders(),
+    })
       .then((res) => {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Error: ${res.status}`);
+        //Si devuelve error se rechaza el promise
+        return Promise.reject(`Error:${res.status}`);
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getInitialCards() {
-    return this._makeRequest("/cards");
+    return fetch(`${this.baseUrl}/cards`, {
+      headers: this.getHeaders(),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  getUserInfo() {
-    return this._makeRequest("/users/me");
+  updateProfile(name, about) {
+    return fetch(`${this.baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this.getHeaders(),
+      body: JSON.stringify({
+        name,
+        about,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  createCard({ link, name }) {
+    return fetch(`${this.baseUrl}/cards`, {
+      method: "POST",
+      headers: this.getHeaders(),
+      body: JSON.stringify({
+        link,
+        name,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  updateUser({ name, about }) {
-    return this._makeRequest("/users/me", "PATCH", { name, about });
-  }
-  addCard({ name, link }) {
-    return this._makeRequest("/cards", "POST", { name, link });
-  }
-  updateAvatar({ avatar }) {
-    return this._makeRequest(`/users/me/avatar`, "PATCH", { avatar });
-  }
   deleteCard(id) {
-    return this._makeRequest(`/cards/${id}`, "DELETE");
+    return fetch(`${this.baseUrl}/cards/${id}`, {
+      method: "DELETE",
+      headers: this.getHeaders(),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  changeLikeStatus({ id, isLiked }) {
-    return this._makeRequest(`/cards/likes/${id}`, isLiked ? "PUT" : "DELETE");
+  deleteCardLike(id) {
+    return fetch(`${this.baseUrl}/cards/${id}/likes`, {
+      method: "DELETE",
+      headers: this.getHeaders(),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  addCardLike(id) {
+    return fetch(`${this.baseUrl}/cards/${id}/likes`, {
+      method: "PUT",
+      headers: this.getHeaders(),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  editAvatar({ avatar }) {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this.getHeaders(),
+      body: JSON.stringify({
+        avatar,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
 
+export const getUserInfo = (token) => {
+  return fetch(`${this.baseUrl}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  });
+};
+
 const api = new Api({
-  baseUrl: "http://localhost:27017",
+  baseUrl: "http://localhost:3000",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
+
 export default api;

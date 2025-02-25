@@ -27,7 +27,7 @@ export default function Main({
         <section className="profile">
           <div className="profile__avatar-picture">
             <img
-              src={CurrentUser?.userAvatar}
+              src={CurrentUser?.avatar}
               alt="Avatar User"
               className="profile__avatar"
               onClick={onEditAvatarClick}
@@ -41,10 +41,10 @@ export default function Main({
           </div>
           <div className="profile-info">
             <h2 className="profile-info__avatar profile-info__avatar_name">
-              {CurrentUser?.userName}
+              {CurrentUser?.name}
             </h2>
             <p className="profile-info__avatar profile-info__avatar_ocupation">
-              {CurrentUser?.userDescription}
+              {CurrentUser?.about}
             </p>
           </div>
           <img

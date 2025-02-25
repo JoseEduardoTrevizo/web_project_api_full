@@ -1,14 +1,17 @@
 .header {
-  display: block;
+  display: flex;
   max-width: 882px;
+  width: 100%;
   max-height: 74px;
   padding-top: 45px;
   margin: auto;
   border-bottom: solid #545454;
+  flex-direction: row;
 }
 .header__logo {
   margin-bottom: 41px;
 }
+
 @media screen and (max-width: 340px) {
   .header {
     max-width: 320px;

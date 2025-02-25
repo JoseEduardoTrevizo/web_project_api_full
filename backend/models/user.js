@@ -3,7 +3,7 @@ const isEmail = require("validator/lib/isEmail");
 const bcrypt = require("bcrypt");
 const unauthorized = require("../errors/unauthorized");
 const regexUser =
-  /(http:\/\/|https:\/\/)(www\.)*(\w+\._~:\/\?\/%#\[\]@!\$&'\(\)\*\+,;=)*\/*/gi;
+  /(http:\/\/|https:\/\/)(www\.)*(\w+\._~:\/\?\/%#\[\]@!\$&'\(\)\*\+,;=)*\/*/i;
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -20,8 +20,15 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
+    required: true,
     default:
       "https://practicum-content.s3.us-west-1.amazonaws.com/resources/moved_avatar_1604080799.jpg",
+    validate: {
+      validator(v) {
+        return regexUser.test(v);
+      },
+      message: (props) => `${props.value} Se nececita una URL valida aa`,
+    },
   },
   email: {
     type: String,

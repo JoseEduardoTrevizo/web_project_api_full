@@ -17,14 +17,10 @@ const cardsRoute = require("./routes/cards");
 require("dotenv").config();
 
 const cors = require("cors");
-app.use(cors());
-app.options("*", cors());
 
-const allowedCors = ["http://localhost:3000", "http://localhost:27017"];
+const allowedCors = ["http://localhost:5173", "https://a"];
 
 app.use(cors({ origin: allowedCors }));
-
-app.use(bodyParser.json());
 
 app.use(express.json());
 
@@ -38,28 +34,16 @@ mongoose
     console.log("Something went wrong", err);
   });
 
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("The server is going to fall down");
+  }, 0);
+});
+
 app.use(requestLogger);
 
-app.get("/crash-test", () => {
-  setTimeout(() => {
-    throw new Error("The server is going to fall down");
-  }, 0);
-});
-
-app.listen(PORT, () => {
-  console.log(`app listening at por ${PORT}...`);
-});
-
-app.get("/crash-test", () => {
-  setTimeout(() => {
-    throw new Error("The server is going to fall down");
-  }, 0);
-});
-
-console.log("login", login);
-
 app.post(
-  "/sigin",
+  "/signin",
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
@@ -101,4 +85,8 @@ app.use((err, req, res, next) => {
     err,
     message: statusCode === 500 ? "Error en el servidor" : message,
   });
+});
+
+app.listen(PORT, () => {
+  console.log(`app listening at por ${PORT}...`);
 });
