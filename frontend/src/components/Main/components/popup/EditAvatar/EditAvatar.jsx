@@ -24,7 +24,7 @@ export default function EditAvatar({ isOpen, onClose, onUpdateAvatar }) {
       onSubmit={handleSubmit}
     >
       <input
-        className="popup changeProfile__inputChange"
+        className="changeProfile__inputChange"
         type="url"
         name="avatar"
         placeholder="Ingrese el nuevo enlace"

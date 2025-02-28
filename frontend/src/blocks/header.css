@@ -7,6 +7,7 @@
   margin: auto;
   border-bottom: solid #545454;
   flex-direction: row;
+  justify-content: space-between;
 }
 .header__logo {
   margin-bottom: 41px;
@@ -15,5 +16,7 @@
 @media screen and (max-width: 340px) {
   .header {
     max-width: 320px;
+    max-height: 225px;
+    flex-direction: column;
   }
 }

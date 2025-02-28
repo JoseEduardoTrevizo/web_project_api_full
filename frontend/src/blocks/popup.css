@@ -4,12 +4,11 @@
   z-index: 1000; /* se posiciona por encima de los elementos*/
   left: 35%;
   top: 30%;
-  width: 100%;
-  height: 100%;
 }
 
 .popup_is-opened {
   display: block;
+  visibility: visible;
 }
 .popup_popup {
   display: none;

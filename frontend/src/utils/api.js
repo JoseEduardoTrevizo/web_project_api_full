@@ -1,7 +1,6 @@
 class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this.baseUrl = baseUrl;
-    this.headers = headers;
   }
 
   getHeaders() {
@@ -34,6 +33,7 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this.baseUrl}/cards`, {
+      method: "GET",
       headers: this.getHeaders(),
     })
       .then((res) => {

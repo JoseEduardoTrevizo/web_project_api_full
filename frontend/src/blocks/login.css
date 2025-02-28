@@ -16,6 +16,10 @@
   border: 0;
   padding: 0;
 }
+.login__header {
+  display: flex;
+  flex-direction: row;
+}
 .login__header-container {
   margin-top: 20px;
   padding-bottom: 0;
@@ -25,19 +29,14 @@
   font-family: Inter;
   font-size: 18px;
   color: #a9a9a9;
-  position: absolute;
-  top: 60px;
-  right: 320px;
 }
 .header__user-email {
   margin: 0;
+  margin-right: 23px;
   font-family: Inter;
   font-size: 18px;
   font-weight: 700;
   color: #fff;
-  position: absolute;
-  top: 60px;
-  right: 450px;
 }
 
 .login__form {
@@ -98,7 +97,10 @@
     max-width: 260px;
     margin: 0 0px 40px 0;
   }
-
+  .login__header {
+    flex-direction: column;
+    align-items: center;
+  }
   .login__form-fieldset {
     width: 340px;
     display: flex;
@@ -121,5 +123,9 @@
   .login__register-link {
     max-width: 260px;
     margin: 0 0 42px 15px;
+  }
+  .header__user-email {
+    margin: 0;
+    margin-bottom: 18px;
   }
 }

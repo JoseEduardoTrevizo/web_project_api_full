@@ -40,9 +40,7 @@
   margin-right: 15px;
   cursor: pointer;
 }
-.elements-card__element_trash_hiden {
-  visibility: hidden;
-}
+
 .elements-card__element_trash:hover {
   opacity: 0.5;
 }

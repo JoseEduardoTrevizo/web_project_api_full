@@ -19,7 +19,7 @@ export default function NewCard({ isOpen, onClose, onUpdateNewCard }) {
   return (
     <Popup
       name={"add-image"}
-      title={"Nuevo Lugaar"}
+      title={"Nuevo Lugar"}
       buttonTitle={loading ? "Guardando..." : "Guardar"}
       isOpen={isOpen}
       onClose={onClose}
