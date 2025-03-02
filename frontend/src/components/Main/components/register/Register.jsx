@@ -25,13 +25,6 @@ export default function Register({ onRegister }) {
   return (
     <>
       <div className="login">
-        <div className="login__header-container">
-          <div className="login__header">
-            <Link to="/login" className="login__header-register">
-              Iniciar sesion
-            </Link>
-          </div>
-        </div>
         <h2 className="title__login"> Registrate</h2>
         <form className="login__form" onSubmit={handleSubmit}>
           <fieldset className="login__form-fieldset">

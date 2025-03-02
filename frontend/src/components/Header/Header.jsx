@@ -25,6 +25,26 @@ export default function Header({ handleLogOut, email }) {
             Cerrar sesion
           </Link>
         )}
+
+        {location.pathname == "/login" && (
+          <Link
+            to="/register"
+            className="login__header-register"
+            onClick={handleLogOut}
+          >
+            Registrate
+          </Link>
+        )}
+
+        {location.pathname == "/register" && (
+          <Link
+            to="/login"
+            className="login__header-register"
+            onClick={handleLogOut}
+          >
+            Iniciar Sesion
+          </Link>
+        )}
       </div>
     </header>
   );

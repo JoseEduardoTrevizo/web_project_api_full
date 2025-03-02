@@ -25,13 +25,6 @@ export default function Login({ onLogin }) {
   return (
     <>
       <div className="login">
-        <div className="login__header-container">
-          <div className="login__header">
-            <Link to="/register" className="login__header-register">
-              Registrate
-            </Link>
-          </div>
-        </div>
         <h2 className="title__login"> Inicia sesion</h2>
         <form className="login__form" onSubmit={handleSubmit}>
           <fieldset className="login__form-fieldset">
