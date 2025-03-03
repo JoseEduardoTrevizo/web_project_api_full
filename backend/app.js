@@ -18,7 +18,12 @@ require("dotenv").config();
 
 const cors = require("cors");
 
-const allowedCors = ["http://localhost:5173", "https://a"];
+const allowedCors = [
+  "http://localhost:5173",
+  "https://aroundusa.crabdance.com",
+  "https://www.aroundusa.crabdance.com",
+  "https://api.around.crabdance.com",
+];
 
 app.use(cors({ origin: allowedCors }));
 
