@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "deploy":"npm run build &&  scp -r ./dist/* Ewardo_tp@aroundusa.crabdance.com:/home/Edwardo_tp/web_project_api_full/frontend"
   },
   "dependencies": {
     "axios": "^1.7.7",
