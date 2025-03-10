@@ -1,4 +1,4 @@
-export const BASE_URL = "http://api.around.crabdance.com";
+export const BASE_URL = "https://api.around.crabdance.com";
 
 export async function login(email, password) {
   try {
