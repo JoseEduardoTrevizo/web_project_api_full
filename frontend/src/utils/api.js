@@ -168,7 +168,7 @@ export const getUserInfo = (token) => {
 };
 
 const api = new Api({
-  baseUrl: "http://localhost:3000",
+  baseUrl: "http://api.around.crabdance.com",
   headers: {
     "Content-Type": "application/json",
   },
