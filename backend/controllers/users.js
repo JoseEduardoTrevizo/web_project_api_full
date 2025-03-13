@@ -92,7 +92,6 @@ module.exports.updateProfile = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      console.log("Profile Error:", err);
       res.status(err.status).send({ error: err.message });
     });
 };
@@ -107,7 +106,6 @@ module.exports.updateAvatar = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      console.log("Avatar Error:", err);
       res.status(err.status).send({ error: err.message });
     });
 };

@@ -18,33 +18,25 @@ class Api {
     return fetch(`${this.baseUrl}/users/me`, {
       method: "GET",
       headers: this.getHeaders(),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        //Si devuelve error se rechaza el promise
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      //Si devuelve error se rechaza el promise
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 
   getInitialCards() {
     return fetch(`${this.baseUrl}/cards`, {
       method: "GET",
       headers: this.getHeaders(),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 
   updateProfile(name, about) {
@@ -55,16 +47,12 @@ class Api {
         name,
         about,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
   createCard({ link, name }) {
     return fetch(`${this.baseUrl}/cards`, {
@@ -74,64 +62,48 @@ class Api {
         link,
         name,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 
   deleteCard(id) {
     return fetch(`${this.baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this.getHeaders(),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 
   deleteCardLike(id) {
     return fetch(`${this.baseUrl}/cards/${id}/likes`, {
       method: "DELETE",
       headers: this.getHeaders(),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 
   addCardLike(id) {
     return fetch(`${this.baseUrl}/cards/${id}/likes`, {
       method: "PUT",
       headers: this.getHeaders(),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 
   editAvatar({ avatar }) {
@@ -141,16 +113,12 @@ class Api {
       body: JSON.stringify({
         avatar,
       }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error:${res.status}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
+    });
   }
 }
 

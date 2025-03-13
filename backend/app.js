@@ -30,14 +30,7 @@ app.use(cors({ origin: allowedCors }));
 app.use(express.json());
 
 //Conexion a la base de datos
-mongoose
-  .connect("mongodb://localhost:27017/eduardodb")
-  .then(() => {
-    console.log("Connected to database");
-  })
-  .catch((err) => {
-    console.log("Something went wrong", err);
-  });
+mongoose.connect("mongodb://localhost:27017/eduardodb");
 
 app.get("/crash-test", () => {
   setTimeout(() => {
@@ -90,8 +83,4 @@ app.use((err, req, res, next) => {
     err,
     message: statusCode === 500 ? "Error en el servidor" : message,
   });
-});
-
-app.listen(PORT, () => {
-  console.log(`app listening at por ${PORT}...`);
 });

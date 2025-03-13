@@ -115,9 +115,6 @@ function App() {
       })
       .then(() => {
         closeAllPopups();
-      })
-      .catch((error) => {
-        console.log("Invalid", error);
       });
   };
 
@@ -138,9 +135,6 @@ function App() {
       })
       .then(() => {
         closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -152,9 +146,6 @@ function App() {
       })
       .then(() => {
         closeAllPopups();
-      })
-      .catch((error) => {
-        console.log("Invalid", error);
       });
   };
 
@@ -236,7 +227,6 @@ function App() {
     auth
       .register(userEmail, password)
       .then((data) => {
-        console.log(data);
         if (data && data._id) {
           setIsRegistered(true);
         } else {

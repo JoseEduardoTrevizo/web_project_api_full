@@ -23,7 +23,6 @@ module.exports.createCard = (req, res) => {
         });
     })
     .catch((error) => {
-      console.log(error);
       res.status(400).send({ message: "Invalid data" });
     });
 };
@@ -53,7 +52,6 @@ module.exports.likeCard = (req, res) => {
       res.send(card);
     })
     .catch((err) => {
-      console.log("likeCard Error:", err);
       res.status(err.status).send({ error: err.message });
     });
 };
@@ -73,7 +71,6 @@ module.exports.dislikeCard = (req, res) => {
       res.send(card);
     })
     .catch((err) => {
-      console.log("likeCard Error:", err);
       res.status(err.status).send({ error: err.message });
     });
 };
